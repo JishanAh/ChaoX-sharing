@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>提交内容</title>
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/input.css">
+    <link rel="stylesheet" href="../css/subbtn.css">
+    <link rel="stylesheet" href="../css/loading.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <script src="../js/php_script.js"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/loader.js"></script>
+    <script src="../js/menu.js"></script>
+    <style>
+        .add .title{
+            font-size: 30px;
+            margin: 30px;
+        }
+        .sr{
+            display: flex;
+            height: 80vh;
+        }
+        .srz{
+            margin: auto;
+            align-self: center;
+        }
+        .group{
+            margin-top: 30px;
+        }
+        .nT{
+            color: white;
+        }
+        button{
+            margin-top: 50px;
+        }
+        .every{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="wifi-loader">
+        <svg class="circle-outer" viewBox="0 0 86 86">
+            <circle class="back" cx="43" cy="43" r="40"></circle>
+            <circle class="front" cx="43" cy="43" r="40"></circle>
+            <circle class="new" cx="43" cy="43" r="40"></circle>
+        </svg>
+        <svg class="circle-middle" viewBox="0 0 60 60">
+            <circle class="back" cx="30" cy="30" r="27"></circle>
+            <circle class="front" cx="30" cy="30" r="27"></circle>
+        </svg>
+        <svg class="circle-inner" viewBox="0 0 34 34">
+            <circle class="back" cx="17" cy="17" r="14"></circle>
+            <circle class="front" cx="17" cy="17" r="14"></circle>
+        </svg>
+        <div class="text" data-text="加载中"></div>
+    </div>
+    <div class="every">
+        <div class="nav">
+            <span class="iconfont icon-menu" onclick="menu('block')"></span>
+            <span class="iconfont icon-x" onclick="menu('none')"></span>
+            <div class="navbut"></div>
+            <p class="nT">提交内容</p>
+        </div>
+        <div class="nl">
+            <ul class="nle">
+                <li onclick="jump('/')">首页</li>
+                <li onclick="jump('../add')">提交内容</li>
+                <li onclick="jump('../')"></li>
+            </ul>
+        </div>
+        <div class="add">
+            <h1 class="title"></h1>
+            <div class="sr">
+                <div class="srz">
+                    <div class="group">
+                        <input required="" type="text" class="input" id="title">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>标题</label>
+                    </div>
+                    <div class="group">
+                        <input required="" type="text" class="input" id="type">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>类型</label>
+                    </div>
+                    <div class="group">
+                        <input required="" type="text" class="input" id="link">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>链接</label>
+                    </div>
+                    <button onclick="tj()">
+                        <div class="svg-wrapper-1">
+                            <div class="svg-wrapper">
+                                <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" fill="currentColor"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <span>提交</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var myip
+        $.getJSON("https://v.api.aa1.cn/api/myip/index.php?aa1=json", function (data){
+            myip = data.myip;
+        })
+        function tj(){
+            var title = $("#title").val();
+            var type = $("#type").val();
+            var link = $("#link").val();
+            var now = new Date();
+            var currentDateTime = now.toLocaleString();
+            var data = data
+            $.ajax({
+                url: "add.php",
+                method: "GET",
+                data: {
+                    title:title,
+                    type:type,
+                    link:link,
+                    ip:myip,
+                    time:currentDateTime
+                },
+                success: function (response){
+                    if (response === 'hk'){
+                        alert("输入的内容中有空字符")
+                    }else if (response === 'sqlerror1'){
+                        alert("数据库连接失败")
+                    }else if (response === 'sqlerror2'){
+                        alert("数据提交失败")
+                    }else if (response === 'suc'){
+                        var xz = confirm("提交成功!是否返回首页?")
+                        if (xz){
+                            jump("/")
+                        }else {
+                            location.reload()
+                        }
+                    }
+                }
+            })
+        }
+    </script>
+    <script>
+        $.getJSON("https://api.ipify.org?format=json", function (data){
+            $.ajax({
+                method: "GET",
+                url: "../fip.php",
+                data: {"ip":data.ip},
+                success: function (response){
+                    if (response === 'sqlerror1'){
+                        alert("数据库连接失败")
+                    }else if (response === 'sqlerror2'){
+                        alert("查询失败")
+                    }else if (response === 'true'){
+                        location.href = "/fip.html"
+                    }else{
+                        return;
+                    }
+                    console.log(response)
+                }
+            })
+        })
+    </script>
+</body>
+</html>

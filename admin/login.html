@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录_后台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/loading.css">
+    <link rel="stylesheet" href="login.css">
+    <script src="../js/loader.js"></script>
+    <script src="../js/jquery.js"></script>
+    <style>
+        .form{
+            position: absolute;
+            top: 30vh;
+            left: 40vw;
+            padding: 30px;
+        }
+        .submit{
+            padding-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wifi-loader">
+        <svg class="circle-outer" viewBox="0 0 86 86">
+            <circle class="back" cx="43" cy="43" r="40"></circle>
+            <circle class="front" cx="43" cy="43" r="40"></circle>
+            <circle class="new" cx="43" cy="43" r="40"></circle>
+        </svg>
+        <svg class="circle-middle" viewBox="0 0 60 60">
+            <circle class="back" cx="30" cy="30" r="27"></circle>
+            <circle class="front" cx="30" cy="30" r="27"></circle>
+        </svg>
+        <svg class="circle-inner" viewBox="0 0 34 34">
+            <circle class="back" cx="17" cy="17" r="14"></circle>
+            <circle class="front" cx="17" cy="17" r="14"></circle>
+        </svg>
+        <div class="text" data-text="加载中"></div>
+    </div>
+    <div class="every">
+        <div  class="form">
+            <p class="form-title">后台登录</p>
+            <div class="input-container">
+                <input type="text" placeholder="账号" class="username">
+                <span>
+              </span>
+            </div>
+            <div class="input-container">
+                <input type="password" placeholder="密码" class="password">
+            </div>
+            <button type="submit" class="submit" onclick="login()">
+                登录
+            </button>
+        </div>
+    </div>
+    <script>
+        function generateRandomString(length) {
+            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let randomString = '';
+            for (let i = 0; i < length; i++) {
+                let randomIndex = Math.floor(Math.random() * characters.length);
+                randomString += characters.charAt(randomIndex);
+            }
+            return randomString;
+        }
+        function login(){
+            let str = generateRandomString(10)
+            let data = {
+                "username": $(".username").val(),
+                "password": $(".password").val(),
+                "sj": str
+            }
+            $.ajax({
+                method: "GET",
+                url: "php_script/login.php",
+                data: data,
+                success: function (response){
+                    if (response === "true"){
+                        localStorage.removeItem("login")
+                        localStorage.setItem("login", str)
+                        alert("登陆成功")
+                        location.href = "./"
+                    }else{
+                        alert("账号或密码错误")
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

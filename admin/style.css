@@ -1,0 +1,72 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+}
+body{
+    background-image: url(../image/background/admin.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+a:link{
+    color: black;
+}
+a:visited{
+    color: black;
+}
+.every{
+    display: none;
+}
+.top{
+    width: 100vw;
+    line-height: 50px;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+.top li{
+    display: inline-block;
+    padding: 20px;
+}
+.top li:hover{
+    background: rgba(255,255,255,0.6);
+}
+.nd{
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+.nd *{
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 20px;
+}
+.nd button{
+    padding: 10px;
+    border-radius: 15px;
+    background: none;
+    border: 2px solid black;
+}
+.nrgl,.ip,.sz{
+    display: none;
+    margin-top: 30px;
+}
+.home{
+    margin-top: 30px;
+}
+.dtitle{
+    margin-bottom: 20px;
+}
+.ip button{
+    margin: 30px;
+}
+.nr{
+    display: none;
+}
