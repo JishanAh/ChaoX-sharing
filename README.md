@@ -12,11 +12,8 @@
 
 代码所有版本(除可能的特制版)将在本Github仓库开源
 
-------
-
-众所周知，Github的下载速度 特 别 慢 ，所以说为了加快下载的速度，我们将开放多个分流下载
-
 
 
 ## 下载
 
+<a href="https://ghproxy.com/?q=https%3A%2F%2Fgithub.com%2FJishanAh%2FChaoX-sharing%2Freleases%2Fdownload%2F1.0%2FCXs.1.0.zip">Github加速下载</a>
